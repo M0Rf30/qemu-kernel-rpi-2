@@ -3,7 +3,7 @@
 # Build latest stable ARM kernel for QEMU Raspberry Pi 2 Emulation
 #
 #######################################################
-MODEL=rpi2
+MODEL=rpi_2
 TOOLCHAIN=arm-none-eabi
 COMMIT=$(curl -s https://www.kernel.org | grep -A1 latest_link | tail -n1 | egrep -o '>[^<]+' | egrep -o '[^>]+')
 export ARCH=arm
@@ -19,7 +19,7 @@ fi
 cd linux-$COMMIT
 
 KERNEL_VERSION=$(make kernelversion)
-KERNEL_TARGET_FILE_NAME=qemu-kernel-$MODEL-$KERNEL_VERSION
+KERNEL_TARGET_FILE_NAME=../qemu_kernel_$MODEL-$KERNEL_VERSION
 echo "Building Qemu Raspberry Pi kernel qemu-kernel-$KERNEL_VERSION"
 
 # Config
@@ -31,5 +31,5 @@ scripts/kconfig/merge_config.sh .config ../config
 make -j 4 -k CC="ccache ${TOOLCHAIN}-gcc" ARCH=arm CROSS_COMPILE=${TOOLCHAIN}- zImage
 #make -j 4 -k CC="ccache ${TOOLCHAIN}-gcc" ARCH=arm CROSS_COMPILE=${TOOLCHAIN}- dtbs
 
-cp arch/arm/boot/zImage ../build/$KERNEL_TARGET_FILE_NAME
+cp arch/arm/boot/zImage $KERNEL_TARGET_FILE_NAME
 
