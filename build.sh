@@ -29,7 +29,8 @@ scripts/kconfig/merge_config.sh .config ../config
 # Compiling
 #make CC="ccache ${TOOLCHAIN}-gcc" ARCH=arm CROSS_COMPILE=${TOOLCHAIN}- xconfig
 make -j 4 -k CC="ccache ${TOOLCHAIN}-gcc" ARCH=arm CROSS_COMPILE=${TOOLCHAIN}- zImage
-#make -j 4 -k CC="ccache ${TOOLCHAIN}-gcc" ARCH=arm CROSS_COMPILE=${TOOLCHAIN}- dtbs
+make -j 4 -k CC="ccache ${TOOLCHAIN}-gcc" ARCH=arm CROSS_COMPILE=${TOOLCHAIN}- dtbs
 
+cat arch/arm/boot/dts/vexpress-v2p-ca15-tc1.dtb >> arch/arm/boot/zImage
 cp arch/arm/boot/zImage $KERNEL_TARGET_FILE_NAME
 
